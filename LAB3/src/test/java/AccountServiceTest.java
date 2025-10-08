@@ -1,0 +1,45 @@
+import nnkhoi.example.AccountService;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+public class AccountServiceTest {
+    static AccountService accountService;
+
+    @BeforeAll
+    static void initAll(){
+        accountService = new AccountService();
+    }
+
+    @AfterAll
+    static void cleanupAll(){
+        accountService = null;
+    }
+
+    @DisplayName("Kiểm tra tính hợp lệ của email")
+    @ParameterizedTest
+    @CsvFileSource(resources = "/email.csv", numLinesToSkip = 1)
+    void testIsValidEmail(String email, Boolean expected){
+        boolean result = accountService.isValidEmail(email);
+        assertEquals(expected, result, () -> email + " should be an " + (expected? "valid" : "invalid") + " email");
+    }
+
+    @DisplayName("Kiểm tra chức năng đăng kí tài khoản")
+    @ParameterizedTest
+    @CsvFileSource(resources = "/account.csv", numLinesToSkip = 1)
+    void testRegisterAccount(String username, String password, String email, String expectedException, Boolean expectedResult){
+        if (expectedException != null) {
+            Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+                accountService.registerAccount(username, password, email);
+            });
+            assertEquals(expectedException, exception.getMessage());
+        } else {
+            assertEquals(expectedResult, accountService.registerAccount(username, password, email), () -> "Account with username: " + username + ", password: " + password +
+                    ",email: " + email + " should be an " + (expectedResult ? "valid" : "invalid") + " account");
+        }
+    }
+}

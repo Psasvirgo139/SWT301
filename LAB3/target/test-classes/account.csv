@@ -1,11 +1,15 @@
 username,password,email,expected
-john123,pass123,john@example.com,,true
-,pass123,john@example.com,User name cannot be null or empty,false
-alice,short,alice@mail.com,Password must be more than 6 characters,false
-bob123,password,bobmail.com,Invalid email address,false
-carol,password,carol@domain.com,,true
-david,,david@domain.com,Password must be more than 6 characters,false
-eve123,goodpass,eve@,Invalid email address,false
-frank,secure123,frank@valid.org,,true
-grace,1234567,,Invalid email address,false
-helen,strongpass,helen@company.net,,true
+john123,Pass123$,john@example.com,true
+,Pass123$,john@example.com,false
+jo,Pass123$,john@example.com,false
+alice,,alice@gmail.com,false
+alice,short,alice@gmail.com,false
+alice,password,alice@gmail.com,false
+alice,Password,alice@gmail.com,false
+alice,Password1,alice@gmail.com,false
+alice,Password!,alice@gmail.com,false
+bob123,password,bobmail.com,false
+carol,password,,false
+,,,false
+john123,Pass123$,alice@example.com,false
+mary_sue,Password1!,john@example.com,false

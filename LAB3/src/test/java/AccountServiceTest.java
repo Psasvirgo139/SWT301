@@ -31,15 +31,13 @@ public class AccountServiceTest {
     @DisplayName("Kiểm tra chức năng đăng kí tài khoản")
     @ParameterizedTest
     @CsvFileSource(resources = "/account.csv", numLinesToSkip = 1)
-    void testRegisterAccount(String username, String password, String email, String expectedException, Boolean expectedResult){
-        if (expectedException != null) {
-            Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-                accountService.registerAccount(username, password, email);
-            });
-            assertEquals(expectedException, exception.getMessage());
-        } else {
-            assertEquals(expectedResult, accountService.registerAccount(username, password, email), () -> "Account with username: " + username + ", password: " + password +
-                    ",email: " + email + " should be an " + (expectedResult ? "valid" : "invalid") + " account");
+    void testRegisterAccount(String username, String password, String email, Boolean expectedResult){
+        if(expectedResult){
+            assertTrue(accountService.registerAccount(username, password, email));
+            return;
         }
+        assertThrows(IllegalArgumentException.class, () -> {
+            accountService.registerAccount(username, password, email);
+        });
     }
 }

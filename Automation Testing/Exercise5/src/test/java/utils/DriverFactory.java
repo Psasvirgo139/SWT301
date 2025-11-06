@@ -14,8 +14,8 @@ public class DriverFactory {
 
         ChromeOptions options = new ChromeOptions();
         Map<String, Object> prefs = new HashMap<>();
-        prefs.put("profile.managed_default_content_settings.javascript", 2);
-        options.setExperimentalOption("prefs", prefs);
+//        prefs.put("profile.managed_default_content_settings.javascript", 2);
+//        options.setExperimentalOption("prefs", prefs);
         options.addArguments("--incognito");
 
         return new ChromeDriver(options);

@@ -49,4 +49,13 @@ public class BasePage {
             return false;
         }
     }
+
+    /**
+     * Click một element bằng JavaScript,
+     * bỏ qua việc bị che khuất
+     */
+    protected void jsClick(By locator) {
+        WebElement element = waitForVisibility(locator); // Vẫn chờ cho nó hiển thị
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
+    }
 }

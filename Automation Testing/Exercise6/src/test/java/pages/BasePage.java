@@ -18,7 +18,10 @@ public class BasePage {
     protected WebElement waitForVisibility(By locator) {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
-
+    // Wait for clickability
+    protected WebElement waitForClickable(By locator) {
+        return wait.until(ExpectedConditions.elementToBeClickable(locator));
+    }
     // Click safely
     protected void click(By locator) {
         waitForVisibility(locator).click();
@@ -40,7 +43,10 @@ public class BasePage {
     public void navigateTo(String url) {
         driver.get(url);
     }
-
+    /** Chờ cho URL hiện tại chứa fragment (vd: "/products", "/auth/login") */
+    public void waitForUrlContains(String fragment) {
+        wait.until(ExpectedConditions.urlContains(fragment));
+    }
     // Check if element is present
     protected boolean isElementVisible(By locator) {
         try {

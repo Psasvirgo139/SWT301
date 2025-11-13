@@ -70,4 +70,11 @@ public class LoginPage extends BasePage {
             return null;
         }
     }
+
+    /** Đang đứng đúng trang login hay không */
+    public boolean isAtLoginPage() {
+        return driver.getCurrentUrl().contains("/auth/login")
+                && isElementVisible(emailField)
+                && isElementVisible(passwordField);
+    }
 }
